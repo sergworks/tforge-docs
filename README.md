@@ -1,6 +1,4 @@
-# tforge-docs
-
-## TForge project's documentation
+## Documentation workflow
 
 ### Initial setup
 
@@ -32,12 +30,5 @@
 
 ` ~/projects/github/tforge-gh-pages $ git push -u origin gh-pages `
 
-
-
-
-
-
-
-
-
+-   See the [site](https://sergworks.github.io/tforge)
 
