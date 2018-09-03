@@ -1,0 +1,20 @@
+site_name: TForge
+theme:
+    name: mkdocs
+    highlightjs: true
+    hljs_style: school-book
+    hljs_languages:
+        - delphi
+nav:
+    - Home: index.md
+    - Classes:
+#        - ByteArray: classes/bytearray.md
+        - TCipher: classes/tcipher.md
+#    - About:
+#        - Release Notes: about/release-notes.md
+#        - Contributing: about/contributing.md
+#        - License: about/license.md
+use_directory_urls: false
+
+
+
