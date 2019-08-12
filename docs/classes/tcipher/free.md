@@ -1,17 +1,24 @@
 ## TCipher.Free
 
-Decrements the reference count of a *TCipher* instance; if the reference count reaches zero, clears the sensitive information stored in the instance and frees memory occupied by the instance.
+Clears sensitive data stored in _TCipher_ instance and dereferences _TCipher_ variable.
 
-### Syntax:
+---
+
+### Syntax
 ```delphi
 procedure TCipher.Free;
 ```
 
-### Remarks:
+### Remarks
 
-*  There is little or no reason to call _TCipher.Free_ method manually; memory is freed automatically when all variables referencing an instance go out of scope.
+*   Dereferencing does not necessarily deallocate memory of _TCipher_ instance; the memory is deallocated when the instance's reference count reaches zero, and it may happen later.
+*   There is little practical difference between _TCipher.Free_ and _TCipher.Burn_ methods.
 
-## Example:
+### See also
+
+*   [TCipher.Burn](burn.md)
+
+### Examples
 ```delphi
 uses
   tfCiphers;

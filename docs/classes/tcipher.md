@@ -6,10 +6,11 @@ Implements secret-key encryption and decryption; declared in _tfCiphers_ unit.
 ### Class Methods
 | Method       | Description   |
 |--------------|---------------|
-[GetInstance](tcipher/getinstance.md) | Creates *TCipher* instance implementing a given algorithm 
-[GetRC5](tcipher/getrc5.md)           | Creates *TCipher* instance implementing customized *RC5* algorithm
-[GetSalsa](tcipher/getsalsa.md)       | Creates *TCipher* instance implementing customized *Salsa* algorithm
-[GetChaCha](tcipher/getchacha.md)     | Creates *TCipher* instance implementing customized *ChaCha* algorithm
+[GetInstance](tcipher/getinstance.md)       | Creates *TCipher* instance implementing a given algorithm 
+[GetAESInstance](tcipher/getaesinstance.md) | Creates *TCipher* instance implementing AES algorithm 
+[GetRC5](tcipher/getrc5.md)                 | Creates *TCipher* instance implementing customized *RC5* algorithm
+[GetSalsa](tcipher/getsalsa.md)             | Creates *TCipher* instance implementing customized *Salsa* algorithm
+[GetChaCha](tcipher/getchacha.md)           | Creates *TCipher* instance implementing customized *ChaCha* algorithm
 
 ---
 ### Instance Methods
@@ -17,13 +18,16 @@ Implements secret-key encryption and decryption; declared in _tfCiphers_ unit.
 |--------------|---------------|
 [AddAuthData](tcipher/addauthdata.md)    | Adds additional authentication data before encryption or decryption
 [Burn](tcipher/burn.md)                  | Clears sensitive data stored in *TCipher* instance
-[Clone](tcipher/clone.md)                | Clones *TCipher* instance
-[Decrypt](tcipher/decrypt.md)            | Decrypts memory data
-[DecryptBlock](tcipher/decryptblock.md)  | Decrypts block of data
-[DecryptByteArray](DecryptByteArray)  | Decrypts data stored in *ByteArray*
-[DecryptStream](DecryptStream)| Decrypts a stream of data
-[DecryptFile](DecryptFile)    | Decrypts a file
-[Free](tcipher/free.md)                  | Uninstantiates *TCipher* variable
+[CheckAuthTag](tcipher/checkauthtag.md)  | Validates authentication tag after decryption
+[Clone](tcipher/clone.md)                | Creates and returns a copy of *TCipher* instance
+[GetAuthTag](tcipher/getauthtag.md)      | Retrieves authentication tag after encryption
+[Decrypt](tcipher/decrypt.md)            | Processing a data part in a multi-part decryption operation
+[DecryptByteArray](tcipher/decryptbytearray.md) | Decrypts data stored in *ByteArray*
+[DecryptFile](tcipher/decryptfile.md)    | Decrypts a file
+[DecryptInit](tcipher/decryptinit.md)    | Initializes decryption operation
+[DecryptStream](decryptstream.md)        | Decrypts a stream of data
+[DecryptUpdate](tcipher/decryptupdate.md)       | Processing a data part in a multi-part decryption operation
+[Free](tcipher/free.md)                  | Clears sensitive data and dereferences *TCipher* variable
 [Encrypt](Encrypt)            | Encrypts arbitrary memory data
 [EncryptBlock](EncryptBlock)  | Encrypts a block of data
 [EncryptByteArray](EncryptByteArray)  | Encrypts a *ByteArray*
@@ -89,7 +93,7 @@ Lets consider an example: encrypt file using *AES* algorithm in *GCM* mode of op
 
     function EncryptGCM(const FileName: string; const Key, IV: ByteArray): ByteArray;
     begin
-      Result:= TCipher.GetInstance(AES_GCM_ENCRYPT)
+      Result:= TCipher.GetInstance(AES_ENCRYPT_GCM)
                       .Init(Key, IV)
                       .AddAuthData(ByteArray.FromText('Encrypted in GCM mode'))
                       .EncryptFile(FileName, FileName + '.aes_gcm')
@@ -106,7 +110,7 @@ Lets consider an example: encrypt file using *AES* algorithm in *GCM* mode of op
       Cipher: TCipher;
 
     begin
-      Cipher:= TCipher.GetInstance(AES_GCM_ENCRYPT);
+      Cipher:= TCipher.GetInstance(AES_ENCRYPT_GCM);
       try
         Cipher.Init(Key, IV);
         Cipher.AddAuthData(ByteArray.FromText('Encrypted in GCM mode'));
@@ -114,16 +118,18 @@ Lets consider an example: encrypt file using *AES* algorithm in *GCM* mode of op
         Result:= Cipher.GetAuthTag(16);
       finally
         Cipher.Burn;
-//        Cipher.Free;
+        Cipher.Free;
       end;
     end;
 ```
 
-The fluent coding is outright gorgeous. _TCipher_ implements automatic memory management and there is no need to call [TCipher.Free](tcipher/free.md) method to deallocate memory used by _TCipher_ instance; fluent coding leverages automatic memory management.
+The fluent coding is gorgeous. _TCipher_ implements automatic memory management and there is no need to call [TCipher.Free](tcipher/free.md) method to deallocate memory used by _TCipher_ instance; fluent coding leverages automatic memory management.
 
-[TCipher.Free](tcipher/free.md) method does not guaranty that the memory is freed: it decrements the instance's reference count and frees memory (having cleared the sensitive information first) if the reference count reaches zero; there is little or no reason to call [TCipher.Free](tcipher/free.md) manually.
+The traditional coding has its pros too: the [TCipher.Burn](tcipher/burn.md) method called in `finally` section clears sensitive information stored in _Cipher_ instance as soon as the sensitive information is not needed anymore.
 
-The traditional coding has its pros too: the [TCipher.Burn](tcipher/burn.md) method called in `finally` section clears sensitive information stored in _Cipher_ instance.
+[TCipher.Free](tcipher/free.md) method dereferences _Cipher_ variable, which decrements the instance's reference count and deallocates memory if the reference count reaches zero.
+
+When the instance's reference count reaches zero, the sensitive information is cleared automatically before deallocating memory. This ensures that the sensitive data will eventually be cleared even if [TCipher.Burn](tcipher/burn.md) or [TCipher.Free](tcipher/free.md) methods were not called.
 
 You can take the best from both worlds, and the recommended code is:
 ```nohighlight
@@ -135,7 +141,7 @@ You can take the best from both worlds, and the recommended code is:
       Cipher: TCipher;
 
     begin
-      Cipher:= TCipher.GetInstance(AES_GCM_ENCRYPT);
+      Cipher:= TCipher.GetInstance(AES_ENCRYPT_GCM);
       try
         Result:= Cipher.Init(Key, IV)
                        .AddAuthData(ByteArray.FromText('Encrypted in GCM mode'))
@@ -143,6 +149,7 @@ You can take the best from both worlds, and the recommended code is:
                        .GetAuthTag(16);
       finally
         Cipher.Burn;
+        Cipher.Free;
       end;
     end;
 ```
@@ -211,7 +218,7 @@ Padding is specified in [TCipher.GetInstance](tcipher/getinstance.md) method's c
       Cipher: TCipher;
 
     begin
-      Cipher:= TCipher.GetInstance(AES_CBC_ENCRYPT or PADDING_ISO);
+      Cipher:= TCipher.GetInstance(AES_ENCRYPT_CBC or PADDING_ISO);
       ...
 ```
 The following types of padding are supported:

@@ -19,7 +19,7 @@ class function TCipher.GetInstance(AAlgID: TAlgID): TCipher; static;
 
 ### Remarks
 
-*   Operation field is mutable; for example, you can create *TCipher* instance with encryption operation specified, use it for encryption by calling [Init](init.md) and later reuse the instance for decryption by calling [DecryptInit](decryptinit.md). Operation may not be defined in *AAlgID* and specified later by calling [EncryptInit](EncryptInit) for encryption or [DecryptInit](decryptinit.md) for decryption.
+*   Operation is mutable; for example, you can create *TCipher* instance with encryption operation specified, use it for encryption by calling [Init](init.md) and later reuse the instance for decryption by calling [DecryptInit](decryptinit.md). Operation may not be defined in *AAlgID* and specified later by calling [EncryptInit](EncryptInit) for encryption or [DecryptInit](decryptinit.md) for decryption.
 
 ### Examples
 
@@ -34,7 +34,7 @@ var
   Cipher: TCipher;
 
 begin
-  Cipher:= TCipher.GetInstance(AES_CBC_ENCRYPT);
+  Cipher:= TCipher.GetInstance(AES_ENCRYPT_CBC);
   try
     Cipher.Init(Key, IV)
           .EncryptFile(FileName, FileName + '.aes');

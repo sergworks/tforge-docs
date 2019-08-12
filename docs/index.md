@@ -8,6 +8,7 @@ TForge is cryptography library written in Delphi
 
 |Type        |Description |
 |------------|------------|
+[ByteArray](classes/bytearray.md)   | Array of bytes
 [TCipher](classes/tcipher.md)       | Secret-key cryptoalgorithms such as AES
 
 

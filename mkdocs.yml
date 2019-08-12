@@ -8,13 +8,11 @@ theme:
 nav:
     - Home: index.md
     - Classes:
-#        - ByteArray: classes/bytearray.md
+        - ByteArray: classes/bytearray.md
         - TCipher: classes/tcipher.md
 #    - About:
 #        - Release Notes: about/release-notes.md
 #        - Contributing: about/contributing.md
 #        - License: about/license.md
 use_directory_urls: false
-
-
 

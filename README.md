@@ -1,6 +1,5 @@
 # Documentation workflow
 
----
 
 ### Initial setup
 
