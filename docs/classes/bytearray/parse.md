@@ -1,27 +1,28 @@
-### Converts string representation of bytes to equivalent *ByteArray* instance ###
+## ByteArray.Parse
 
-## Syntax:
-```
-#!delphi
+Converts string representation of bytes to equivalent *ByteArray* instance
+
+---
+
+### Syntax
+```delphi
 class function ByteArray.Parse(const S: string): ByteArray;
 class function ByteArray.Parse(const S: string; Delimiter: Char): ByteArray;
 ```
 
-##Parameters:
+### Parameters
 
 *   *S*: string containing array of bytes to convert
 *   *Delimiter*: character that can separate bytes in the string
 
-##Remarks:
+### Remarks
 
 *   if the *Delimiter* parameter is absent, the string bytes should be separated by spaces
 *   if the *Delimiter* parameter is present, the string bytes can be separated by spaces and the *Delimiter*
 *   the string bytes can be decimal, Pascal-style hexadecimal (*$??*) or C-style hexadecimal (*0x??*)
 
-##Example:
-```
-#!delphi
-
+### Example
+```delphi
 var
   A: ByteArray;
 

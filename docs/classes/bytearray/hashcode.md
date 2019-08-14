@@ -1,18 +1,20 @@
-### 32-bit hash value for a *ByteArray* instance ###
+## TByteArray.HashCode
 
-## Syntax:
+Returns 32-bit hash value for *ByteArray* instance
+
+---
+
+### Syntax
+```delphi
+function ByteArray.HashCode: Integer;
 ```
-#!delphi
-property HashCode: Integer read GetHashCode;
-```
 
-## Remarks:
+### Remarks
 
-*   the hash code can be used to build hash tables (aka dictionaries, associative arrays) having *ByteArray* values as keys
+*   Hash code can be used to build hash tables (aka dictionaries, associative arrays) having *ByteArray* values as keys
 
-## Example:
-```
-#!delphi
+### Example
+```delphi
 var
   A: ByteArray;
 

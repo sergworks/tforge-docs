@@ -1,14 +1,16 @@
-### Destroys the data stored in a *ByteArray* instance ###
+## ByteArray.Burn
 
-## Syntax:
-```
-#!delphi
+Clears data stored in *ByteArray* instance
+
+---
+
+### Syntax
+```delphi
 procedure ByteArray.Burn;
 ```
-##Example:
-```
-#!delphi
 
+### Example
+```delphi
 var
   A: ByteArray;
 
@@ -17,5 +19,5 @@ begin
   Writeln(A.ToString);  // outputs '10 20 30 40'
   A.Burn;
   Writeln(A.ToString);  // outputs '0'
-
+end;
 ```

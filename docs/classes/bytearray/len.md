@@ -1,25 +1,28 @@
-### Number of bytes in a *ByteArray* instance ###
+## ByteArray.Len
 
-## Syntax:
-```
-#!delphi
+Number of bytes in a *ByteArray* instance
+
+---
+
+### Syntax
+```delphi
 property Len: Integer read GetLen write SetLen;
 ```
 
-## Remarks:
+### Remarks
 
-*   setting `ByteArray.Len` may reallocate the *ByteArray* instance in memory
+*   number of bytes set by `ByteArray.Len` must not exceed size of *ByteArray* instance
 
-## Example:
-```
-#!delphi
+### Example
+```delphi
 var
   A: ByteArray;
 
 begin
   A:= ByteArray.Parse('10 20 30 40 50');
-  Writeln(A.Len, ': ', A.ToString);  // 5: 10 20 30 40 50
-  A.Len:= 6;
-  A[5]:= 60;
-  Writeln(A.Len, ': ', A.ToString);  // 6: 10 20 30 40 50 60
+  Writeln(A.Len, ': ', A.ToString);  // '5: 10 20 30 40 50'
+  A.Len:= 4;
+  Writeln(A.Len, ': ', A.ToString);  // '4: 10 20 30 40'
+  A.Len:= 5;
+  Writeln(A.Len, ': ', A.ToString);  // '5: 10 20 30 40 50'
 ```

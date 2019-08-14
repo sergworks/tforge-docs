@@ -1,29 +1,31 @@
-### Bytewise (modulo 256) addition of two *ByteArray* instances ###
+## ByteArray.AddBytes
 
-## Syntax:
+Bytewise (modulo 256) addition of two *ByteArray* operands
+
+---
+
+### Syntax
+```delphi
+class function ByteArray.AddBytes(const A, B: ByteArray): ByteArray;
 ```
-#!delphi
- class function ByteArray.AddBytes(const A, B: ByteArray): ByteArray;
-```
 
-## Parameters:
+### Parameters
 
-*   *A* - left *ByteArray* instance 
-*   *B* - right *ByteArray* instance
+*   *A* - left *ByteArray* operand 
+*   *B* - right *ByteArray* operand
 
-## Remarks:
+### Remarks
 
-*   if the *ByteArray* operands have different lengths, the result has length of the shorter operand 
+*   the *ByteArray* operands must have equal length
 
-## Example:
-```
-#!delphi
-
+### Example
+```delphi
 var
   A, B: ByteArray;
 
 begin
-  A:= ByteArray.FromBytes([1, 2, 3, 4, 5]);
-  B:= ByteArray.FromBytes([10, 20, 30]);
-  Writeln(ByteArray.AddBytes(A, B).ToString);  // outputs '11 22 33'
+  A:= ByteArray.FromBytes([1, 2, 3]);
+  B:= ByteArray.FromBytes([254, 254, 254]);
+  Writeln(ByteArray.AddBytes(A, B).ToString);  // outputs '255 0 1'
+end;
 ```

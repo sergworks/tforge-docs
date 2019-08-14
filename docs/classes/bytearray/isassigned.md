@@ -1,14 +1,16 @@
-### Checks if a *ByteArray* variable is instantiated
+## ByteArray.IsAssigned
 
-## Syntax:
-```
-#!delphi
+Checks if a *ByteArray* variable is instantiated
+
+---
+
+### Syntax
+```delphi
 function ByteArray.IsAssigned: Boolean;
 ```
 
-## Example:
-```
-#!delphi
+### Example
+```delphi
 var
   A: ByteArray;
 

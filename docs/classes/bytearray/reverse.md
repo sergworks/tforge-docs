@@ -1,14 +1,16 @@
-### Reverses byte order in a *ByteArray* ###
+## ByteArray.Reverse
 
-## Syntax:
-```
-#!delphi
+Reverses byte order in a *ByteArray*
+
+---
+
+### Syntax
+```delphi
 function ByteArray.Reverse: ByteArray;
 ```
 
-## Example:
-```
-#!delphi
+### Example
+```delphi
 var
   A: ByteArray;
 
