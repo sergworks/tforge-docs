@@ -13,9 +13,9 @@ nav:
         - ByteArray: classes/bytearray.md
         - TCipher: classes/tcipher.md
         - TCRC: classes/tcrc.md
-#        - THash: classes/thash.md
-#        - THMAC: classes/thmac.md
-#        - TMont: classes/tmont.md
+        - THash: classes/thash.md
+        - THMAC: classes/thmac.md
+        - TMont: classes/tmont.md
 #    - About:
 #        - Release Notes: about/release-notes.md
 #        - Contributing: about/contributing.md

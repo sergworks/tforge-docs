@@ -1,6 +1,6 @@
 ## TCRC
 
-Implements CRC algorithms; declred in _tfCRCs_ unit.
+Implements CRC algorithms; declared in _tfCRCs_ unit.
 
 ---
 
